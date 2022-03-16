@@ -23,9 +23,9 @@
     <div class="col-sm-4">
       <div class="card">
         <div class="card-header">To-Do</div>
-        <ng-container *ngIf="list.length; else empty">
-          <ul class="list-group list-group-flush" *ngFor="let task of list">
-            <ng-container *ngIf="task.toDo">
+        <ng-container *ngIf="toDo.length; else empty">
+          <ul class="list-group list-group-flush" *ngFor="let task of toDo">
+            <ng-container *ngIf="task.state == state.toDo">
               <app-task-component
                 [task]="task"
                 (delete)="removeTaskHandler($event)"
@@ -40,9 +40,12 @@
     <div class="col-sm-4">
       <div class="card">
         <div class="card-header">In Progress</div>
-        <ng-container>
-          <ul class="list-group list-group-flush" *ngFor="let task of list">
-            <ng-container *ngIf="task.inProgress">
+        <ng-container *ngIf="inProgress.length; else empty">
+          <ul
+            class="list-group list-group-flush"
+            *ngFor="let task of inProgress"
+          >
+            <ng-container *ngIf="task.state == state.inProgress">
               <app-task-component
                 [task]="task"
                 (delete)="removeTaskHandler($event)"
@@ -57,9 +60,9 @@
     <div class="col-sm-4">
       <div class="card">
         <div class="card-header">Done</div>
-        <ng-container *ngIf="list.length; else empty">
-          <ul class="list-group list-group-flush" *ngFor="let task of list">
-            <ng-container *ngIf="task.done">
+        <ng-container *ngIf="done.length; else empty">
+          <ul class="list-group list-group-flush" *ngFor="let task of done">
+            <ng-container *ngIf="task.state == state.done">
               <app-task-component
                 [task]="task"
                 (delete)="removeTaskHandler($event)"

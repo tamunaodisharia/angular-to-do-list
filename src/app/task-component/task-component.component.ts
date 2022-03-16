@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task } from '../app.component';
+import { Task, State } from '../app.component';
 
 @Component({
   selector: 'app-task-component',
@@ -11,7 +11,7 @@ export class TaskComponentComponent implements OnInit {
   @Output() delete = new EventEmitter<number>();
   @Output() right = new EventEmitter<number>();
   @Output() left = new EventEmitter<number>();
-
+  state = State;
   constructor() {}
 
   removeTask(id: number) {

@@ -1,12 +1,16 @@
 <ng-container *ngIf="task">
   <li class="list-group-item">
     {{ task.name }}
-    <ng-container *ngIf="task.inProgress || task.done">
+    <ng-container
+      *ngIf="task.state == state.inProgress || task.state == state.done"
+    >
       <button type="button" class="btn btn-primary" (click)="moveLeft(task.id)">
         &lt;
       </button>
     </ng-container>
-    <ng-container *ngIf="task.toDo || task.inProgress">
+    <ng-container
+      *ngIf="task.state == state.toDo || task.state == state.inProgress"
+    >
       <button
         type="button"
         class="btn btn-primary"
@@ -15,7 +19,7 @@
         >
       </button>
     </ng-container>
-    <ng-container *ngIf="task.toDo">
+    <ng-container *ngIf="task.state == state.toDo">
       <button
         type="button"
         class="btn btn-danger"
@@ -24,10 +28,10 @@
         X
       </button>
     </ng-container>
-    <div [ngSwitch]="task.difficulty">
-      <div class="green" *ngSwitchCase="'Easy'">Easy</div>
-      <div class="blue" *ngSwitchCase="'Medium'">Medium</div>
-      <div class="red" *ngSwitchCase="'Hard'">Hard</div>
+    <div>
+      <div [ngClass]="task.difficulty">
+        {{ task.difficulty }}
+      </div>
     </div>
   </li>
 </ng-container>

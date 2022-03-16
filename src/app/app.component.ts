@@ -1,14 +1,20 @@
 import { Component } from '@angular/core';
+import { of } from 'rxjs';
 
 export interface Task {
   id: number;
   name: string;
   difficulty: string;
-  toDo: boolean;
-  inProgress: boolean;
-  done: boolean;
+  state: State;
+  // toDo: boolean;
+  // inProgress: boolean;
+  // done: boolean;
 }
-
+export enum State {
+  toDo,
+  inProgress,
+  done,
+}
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,61 +22,76 @@ export interface Task {
 })
 export class AppComponent {
   list: Task[] = [];
-
+  toDo: Task[] = [];
+  inProgress: Task[] = [];
+  done: Task[] = [];
+  state = State;
   addTask(name: string, difficulty: string) {
-    this.list.push({
-      id: this.list.length,
+    this.toDo.push({
+      id: this.toDo.length,
       name: name,
       difficulty: difficulty,
-      toDo: true,
-      inProgress: false,
-      done: false,
+      state: State.toDo,
+      // toDo: true,
+      // inProgress: false,
+      // done: false,
     });
-    console.log(this.list);
   }
-  // moveRight(id: number) {
-  //   if (this.list[id].toDo) {
-  //     this.list[id].toDo = false;
-  //     this.list[id].inProgress = true;
-  //   } else if (this.list[id].inProgress) {
-  //     this.list[id].inProgress = false;
-  //     this.list[id].done = true;
-  //   }
-  // }
-  // moveLeft(id: number) {
-  //   if (this.list[id].inProgress) {
-  //     this.list[id].toDo = true;
-  //     this.list[id].inProgress = false;
-  //   } else if (this.list[id].done) {
-  //     this.list[id].inProgress = true;
-  //     this.list[id].done = false;
-  //   }
-  // }
-  // removeTask(id: number) {
-  //   this.list = this.list.filter((item) => item.id !== id);
-  // }
+
   removeTaskHandler(id: number) {
-    // const user = this.users.find((user) => user?.id === id);
-    // const index = this.users.indexOf(user);
-    // this.users.splice(index, 1);
-    this.list = this.list.filter((item) => item.id !== id);
+    const task = this.toDo.find((task) => task?.id === id);
+    const index = this.toDo.indexOf(task!);
+    this.toDo.splice(index, 1);
+    //this.list = this.list.filter((item) => item.id !== id);
   }
   moveRightHandler(id: number) {
-    if (this.list[id].toDo) {
-      this.list[id].toDo = false;
-      this.list[id].inProgress = true;
-    } else if (this.list[id].inProgress) {
-      this.list[id].inProgress = false;
-      this.list[id].done = true;
+    let task = this.toDo.find((task) => task?.id === id);
+    if (!task) {
+      task = this.inProgress.find((task) => task?.id === id);
+      if (task) {
+        const index = this.inProgress.indexOf(task);
+        this.inProgress.splice(index, 1);
+        task.state = State.done;
+        this.done.push(task);
+      }
+    } else {
+      const index = this.toDo.indexOf(task);
+      this.toDo.splice(index, 1);
+      task.state = State.inProgress;
+      this.inProgress.push(task);
     }
+
+    // if (this.list[id].toDo) {
+    //   this.list[id].toDo = false;
+    //   this.list[id].inProgress = true;
+    // } else if (this.list[id].inProgress) {
+    //   this.list[id].inProgress = false;
+    //   this.list[id].done = true;
+    // }
   }
   moveLeftHandler(id: number) {
-    if (this.list[id].inProgress) {
-      this.list[id].toDo = true;
-      this.list[id].inProgress = false;
-    } else if (this.list[id].done) {
-      this.list[id].inProgress = true;
-      this.list[id].done = false;
+    let task = this.inProgress.find((task) => task?.id === id);
+    if (!task) {
+      task = this.done.find((task) => task?.id === id);
+      if (task) {
+        const index = this.inProgress.indexOf(task);
+        this.done.splice(index, 1);
+        task.state = State.inProgress;
+        this.inProgress.push(task);
+      }
+    } else {
+      const index = this.inProgress.indexOf(task);
+      this.inProgress.splice(index, 1);
+      task.state = State.toDo;
+      this.toDo.push(task);
     }
+
+    // if (this.list[id].inProgress) {
+    //   this.list[id].toDo = true;
+    //   this.list[id].inProgress = false;
+    // } else if (this.list[id].done) {
+    //   this.list[id].inProgress = true;
+    //   this.list[id].done = false;
+    // }
   }
 }
