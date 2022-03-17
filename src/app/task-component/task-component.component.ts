@@ -11,7 +11,9 @@ export class TaskComponentComponent implements OnInit {
   @Output() delete = new EventEmitter<number>();
   @Output() right = new EventEmitter<number>();
   @Output() left = new EventEmitter<number>();
+
   state = State;
+
   constructor() {}
 
   removeTask(id: number) {

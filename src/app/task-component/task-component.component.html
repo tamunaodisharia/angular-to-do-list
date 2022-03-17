@@ -1,33 +1,30 @@
 <ng-container *ngIf="task">
   <li class="list-group-item">
     {{ task.name }}
-    <ng-container
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="moveLeft(task.id)"
       *ngIf="task.state == state.inProgress || task.state == state.done"
     >
-      <button type="button" class="btn btn-primary" (click)="moveLeft(task.id)">
-        &lt;
-      </button>
-    </ng-container>
-    <ng-container
+      &lt;
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="moveRight(task.id)"
       *ngIf="task.state == state.toDo || task.state == state.inProgress"
     >
-      <button
-        type="button"
-        class="btn btn-primary"
-        (click)="moveRight(task.id)"
       >
-        >
-      </button>
-    </ng-container>
-    <ng-container *ngIf="task.state == state.toDo">
-      <button
-        type="button"
-        class="btn btn-danger"
-        (click)="removeTask(task.id)"
-      >
-        X
-      </button>
-    </ng-container>
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="removeTask(task.id)"
+      *ngIf="task.state == state.toDo"
+    >
+      X
+    </button>
     <div>
       <div [ngClass]="task.difficulty">
         {{ task.difficulty }}
