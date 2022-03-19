@@ -26,7 +26,13 @@
       X
     </button>
     <div>
-      <div [ngClass]="task.difficulty">
+      <div
+        [ngClass]="{
+          green: task.difficulty == difficulty.Easy,
+          blue: task.difficulty == difficulty.Medium,
+          red: task.difficulty == difficulty.Hard
+        }"
+      >
         {{ task.difficulty }}
       </div>
     </div>

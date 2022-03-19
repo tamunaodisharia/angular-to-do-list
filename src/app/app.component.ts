@@ -4,13 +4,18 @@ import { of } from 'rxjs';
 export interface Task {
   id: number;
   name: string;
-  difficulty: string;
+  difficulty: Difficulty;
   state: State;
 }
 export enum State {
   toDo,
   inProgress,
   done,
+}
+export enum Difficulty {
+  Easy = 'Easy',
+  Medium = 'Medium',
+  Hard = 'Hard',
 }
 @Component({
   selector: 'app-root',
@@ -28,7 +33,12 @@ export class AppComponent {
     this.toDo.push({
       id: this.toDo.length,
       name: name,
-      difficulty: difficulty,
+      difficulty:
+        difficulty === 'Easy'
+          ? Difficulty.Easy
+          : difficulty === 'Medium'
+          ? Difficulty.Medium
+          : Difficulty.Hard,
       state: State.toDo,
     });
   }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Task, State } from '../app.component';
+import { Task, State, Difficulty } from '../app.component';
 
 @Component({
   selector: 'app-task-component',
@@ -13,6 +13,7 @@ export class TaskComponentComponent implements OnInit {
   @Output() left = new EventEmitter<number>();
 
   state = State;
+  difficulty = Difficulty;
 
   constructor() {}
 
