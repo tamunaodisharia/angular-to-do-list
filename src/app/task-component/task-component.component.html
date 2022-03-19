@@ -26,13 +26,7 @@
       X
     </button>
     <div>
-      <div
-        [ngClass]="{
-          green: task.difficulty == difficulty.Easy,
-          blue: task.difficulty == difficulty.Medium,
-          red: task.difficulty == difficulty.Hard
-        }"
-      >
+      <div [ngClass]="getStyles(task.difficulty)">
         {{ task.difficulty }}
       </div>
     </div>

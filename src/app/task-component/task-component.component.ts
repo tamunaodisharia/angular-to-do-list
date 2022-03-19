@@ -17,6 +17,13 @@ export class TaskComponentComponent implements OnInit {
 
   constructor() {}
 
+  getStyles(difficulty: Difficulty) {
+    return {
+      green: difficulty == this.difficulty.Easy,
+      blue: difficulty == this.difficulty.Medium,
+      red: difficulty == this.difficulty.Hard,
+    };
+  }
   removeTask(id: number) {
     this.delete.emit(id);
   }
